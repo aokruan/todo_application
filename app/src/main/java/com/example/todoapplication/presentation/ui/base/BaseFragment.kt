@@ -12,31 +12,20 @@ abstract class BaseFragment : Fragment() {
 
     abstract val layoutRes: Int
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? =
-        container?.inflate(layoutRes).also {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return container?.inflate(layoutRes).also {
             setHasOptionsMenu(true)
         }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setModelBindings()
-        setListeners()
     }
 
-    abstract fun setModelBindings()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setListeners()
+    }
 
     abstract fun setListeners()
 
     open fun showMessage(resMsg: Int) {
         val view = view ?: return
         Snackbar.make(view, resMsg, Snackbar.LENGTH_SHORT).show()
-    }
-
-    open fun showMessage(msg: String) {
-        val view = view ?: return
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
     }
 }
