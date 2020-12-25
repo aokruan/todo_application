@@ -43,14 +43,15 @@ val databaseModule = module {
         return database.todoDao()
     }
 
-/*    fun provideUserDao(database: AppDatabase): UserDao {
+    fun provideUserDao(database: AppDatabase): UserDao {
         return database.userDao()
-    }*/
+    }
 
     single { provideDatabase(androidApplication()) }
     single { provideDao(get()) }
-    //single { provideUserDao(get()) }
+    single { provideUserDao(get()) }
 }
+
 
 val apiModule = module {
     fun provideUserApi(retrofit: Retrofit): UserApi {
@@ -80,7 +81,8 @@ val netModule = module {
 
     fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("http://gitlab.65apps.com/")
+                //.baseUrl("http://gitlab.65apps.com/")
+            .baseUrl("https://gist.githubusercontent.com/aokruan/")
                 .addConverterFactory(GsonConverterFactory.create(factory))
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(client)
@@ -99,11 +101,11 @@ val repositoryModule = module {
 //        return TodoRepository(dao)
 //    }
 
-    fun provideUserRepository(userApi: UserApi): UserRepository {
-        return UserRepository(userApi)
+    fun provideUserRepository(userApi: UserApi, userDao:UserDao): UserRepository {
+        return UserRepository(userApi, userDao)
     }
 
-    single { provideUserRepository(get()) }
+    single { provideUserRepository(get(), get()) }
 
 
 //    single { provideTodoRepository(get()) }
