@@ -1,5 +1,6 @@
 package com.example.todoapplication.presentation.ui.todo
 
+import com.example.todoapplication.presentation.ui.todo.TodoAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View

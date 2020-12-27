@@ -11,17 +11,22 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.todoapplication"
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -49,6 +54,7 @@ dependencies {
 
     //Room
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "android.arch.persistence.room:runtime:1.0.0-alpha3"
 
     //DI
     implementation "org.koin:koin-android:$koin_version"
@@ -64,10 +70,10 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.2.0'
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
-    //Anko
+    // Anko
     implementation "org.jetbrains.anko:anko:$anko_version"
 
-    //RX
+    // RX
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
@@ -86,6 +92,11 @@ dependencies {
     // Gson
     implementation "com.google.code.gson:gson:2.8.5"
 
-    //DataTime
+    // DataTime
     implementation 'net.danlew:android.joda:2.10.7.2'
+
+    // MultiDex
+    implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 }

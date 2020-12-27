@@ -3,30 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/userFragment">
+    app:startDestination="@id/specialityFragment">
 
     <fragment
-        android:id="@+id/userFragment"
-        android:name="com.example.todoapplication.presentation.ui.user.UserFragment"
-        tools:layout="@layout/fragment_user">
+        android:id="@+id/specialityFragment"
+        android:name="com.example.todoapplication.presentation.ui.speciality.SpecialityFragment"
+        tools:layout="@layout/fragment_specialty_list">
+        <action
+            android:id="@+id/action_specialityFragment_to_actionToUsersBySpecialty"
+            app:destination="@id/actionToUsersBySpecialty"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
+    <fragment
+        android:id="@+id/actionToUsersBySpecialty"
+        android:name="com.example.todoapplication.presentation.ui.users_specialty.UsersSpecialtyFragment"
+        tools:layout="@layout/fragment_specialty_list">
+        <action
+            android:id="@+id/action_UsersBySpecialty_to_actionToEmploeeDetails"
+            app:destination="@id/actionToEmploeeDetails"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/todoListFragment"-->
-    <!--        android:name="com.example.todoapplication.presentation.ui.todo.TodoListFragment"-->
-    <!--        tools:layout="@layout/fragment_todo_list">-->
-    <!--        <action-->
-    <!--            android:id="@+id/actionToTodoDetails"-->
-    <!--            app:destination="@+id/todoDetailsFragment"-->
-    <!--            app:enterAnim="@anim/nav_default_enter_anim"-->
-    <!--            app:exitAnim="@anim/nav_default_exit_anim"-->
-    <!--            app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-    <!--            app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-    <!--    </fragment>-->
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/todoDetailsFragment"-->
-    <!--        android:name="com.example.todoapplication.presentation.ui.todo.TodoDetailsFragment"-->
-    <!--        tools:layout="@layout/fragment_todo_details" />-->
+    <fragment
+        android:id="@+id/actionToEmploeeDetails"
+        android:name="com.example.todoapplication.presentation.ui.users_specialty.EmploeeDetailsFragment"
+        tools:layout="@layout/fragment_emploee_details">
+    </fragment>
 </navigation>

@@ -1,27 +1,28 @@
 package com.example.todoapplication.domain.entity
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
+import org.joda.time.Period
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
+import org.joda.time.format.ISODateTimeFormat
 
-
-data class UsersBase(@SerializedName("response") var response: MutableList<User> = mutableListOf())
+//data class UsersBase(@SerializedName("response") var response: MutableList<User> = mutableListOf())
 
 @Parcelize
 @Entity
 data class User(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
 
-    @SerializedName("f_name") var firstName: String = "",
-    @SerializedName("l_name") var lastName: String = "",
-    @SerializedName("birthday") var birthday: String? = "",
-    @SerializedName("avatr_url") var avatrUrl: String = ""
+    var firstName: String = "",
+    var lastName: String = "",
+    var birthday: String? = "",
+    var age: String? = "",
+    var avatrUrl: String? = null
 ) : Parcelable {
 
     // Преобразование к нижнему регистру. Устанавливает первый символ в верхний регистр
@@ -34,21 +35,113 @@ data class User(
             "" -> "-"
             else -> {
                 // TODO: 25.12.20  Даты прилетают неправильные, если не совпадает, то подставляется
-                val formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
-                val formatter2 = DateTimeFormat.forPattern("dd-MM-yyyy")
-                var dt: DateTime
+                var date = ""
 
                 // В связи с разным форматом, пока такое решение
                 try {
-                    dt = formatter.parseDateTime(birthday)
+                    var pattern = DateTime.parse(birthday, DateTimeFormat.forPattern("dd-MM-yyyy"))
+                    val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                    val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                    val dateTime: DateTime =
+                        dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+
+                    val pattern2 = "dd.MM.yyyy"
+
+                    val dtf1 = ISODateTimeFormat.dateTime()
+                    val parsedDate = dtf1.parseLocalDateTime(dateTime.toString())
+                    val dateWithCustomFormat =
+                        parsedDate.toString(DateTimeFormat.forPattern(pattern2))
+
+                    date = dateWithCustomFormat
+
                 } catch (e: Exception) {
                     try {
-                        dt = formatter2.parseDateTime(birthday)
+                        var pattern =
+                            DateTime.parse(birthday, DateTimeFormat.forPattern("yyyy-MM-dd"))
+                        val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                        val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                        val dateTime: DateTime =
+                            dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+
+                        val pattern2 = "dd.MM.yyyy"
+
+                        val dtf1 = ISODateTimeFormat.dateTime()
+                        val parsedDate = dtf1.parseLocalDateTime(dateTime.toString())
+                        val dateWithCustomFormat =
+                            parsedDate.toString(DateTimeFormat.forPattern(pattern2))
+                        date = dateWithCustomFormat
                     } finally {
                     }
                 }
-                return dt.dayOfWeek.toString() + "." + dt.monthOfYear
-                    .toString() + "." + dt.year.toString() + " г."
+                return date
+            }
+        }
+    }
+
+    // Преобразование даты рождения к единому формату
+    fun calculateAge(birthday: String?): String {
+        return when (birthday) {
+            null -> "-"
+            "" -> "-"
+            else -> {
+                // TODO: 25.12.20  Даты прилетают неправильные, если не совпадает, то подставляется
+                var date = ""
+
+                // В связи с разным форматом, пока такое решение
+                try {
+                    var pattern =
+                        DateTime.parse(birthday, DateTimeFormat.forPattern("dd-MM-yyyy"))
+                    val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                    val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                    val dateTime: DateTime =
+                        dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+
+                    val start = DateTime(
+                        dateTime.year,
+                        dateTime.monthOfYear,
+                        dateTime.dayOfWeek,
+                        0,
+                        0,
+                        0,
+                        0
+                    )
+                    val endDate = DateTime.now()
+
+                    val period = Period(start, endDate)
+
+                    date = period.years.toString()
+
+                } catch (e: Exception) {
+                    try {
+                        var pattern =
+                            DateTime.parse(birthday, DateTimeFormat.forPattern("yyyy-MM-dd"))
+                        val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                        val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                        val dateTime: DateTime =
+                            dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+
+                        val start = DateTime(
+                            dateTime.year,
+                            dateTime.monthOfYear,
+                            dateTime.dayOfWeek,
+                            0,
+                            0,
+                            0,
+                            0
+                        )
+                        val endDate = DateTime.now()
+
+                        val period = Period(start, endDate)
+
+                        date = period.years.toString()
+                    } finally {
+                    }
+                }
+                return date
             }
         }
     }
@@ -59,111 +152,20 @@ data class User(
             fixFailureFields(firstName),
             fixFailureFields(lastName),
             changeBirtday(birthday),
+            calculateAge(age),
             avatrUrl
         )
     }
 }
 
 @Parcelize
-@Entity(
-    foreignKeys = [ForeignKey(
-        entity = User::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("userId"),
-        onDelete = ForeignKey.CASCADE
-    )]
-)
-
+@Entity
 data class Specialty(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
 
-    @SerializedName("specialty_id") var specialtyId: Int = 0,
-    @SerializedName("name") var name: String = "",
-    @ColumnInfo(name = "userId")
+    var specialtyId: Int = 0,
+    var name: String = "",
     var userId: Long = 0
 ) : Parcelable
 
-
-//@Entity(tableName = "my_table")
-//class MyData {
-//    @PrimaryKey(autoGenerate = true)
-//    var id = 0
-//
-//    @ColumnInfo(name = "ListData")
-//    @TypeConverters(DataTypeConverter::class)
-//    private var mList: List<MyListObject>? = null
-//
-//    @Embedded
-//    var user: Userd? = null
-//    var list: List<Any>?
-//        get() = mList
-//        set(list) {
-//            mList = list
-//        }
-//}
-//
-//class Userd {
-//    @ColumnInfo(name = "first_name")
-//    var firstName: String? = null
-//
-//    @ColumnInfo(name = "last_name")
-//    var lastName: String? = null
-//}
-//
-//object DataTypeConverter {
-//    private val gson = Gson()
-//    @TypeConverter
-//    fun stringToList(data: String?): List<MyListObject> {
-//        if (data == null) {
-//            return Collections.emptyList()
-//        }
-//        val listType: Type = object : TypeToken<List<MyListObject?>?>() {}.type
-//        return gson.fromJson<List<MyListObject>>(data, listType)
-//    }
-//
-//    @TypeConverter
-//    fun ListToString(someObjects: List<MyListObject?>?): String {
-//        return gson.toJson(someObjects)
-//    }
-//}
-
-
-/*Вариант на json с specialty: String = ""
-*
-*     @Insert
-    fun insertAll(user: List<User>): LongArray?
-* */
-//data class UsersBase(@SerializedName("response") var response: List<User> = listOf())
-//
-//@Parcelize
-//@Entity
-//data class User(
-//    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-//
-//    @SerializedName("f_name") var firstName: String = "",
-//    @SerializedName("l_name") var lastName: String = "",
-//    @SerializedName("birthday") var birthday: String? = "",
-//    @SerializedName("avatr_url") var avatrUrl: String = "",
-//
-//
-//    @SerializedName("specialty") var specialty: String = "",
-//    var specialtyId: Long = 0
-//) : Parcelable
-//
-//@Parcelize
-//@Entity(
-//    foreignKeys = [ForeignKey(
-//        entity = User::class,
-//        parentColumns = arrayOf("id"),
-//        childColumns = arrayOf("userId"),
-//        onDelete = ForeignKey.CASCADE
-//    )]
-//)
-//data class Specialty(
-//    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-//
-//    @SerializedName("specialty_id") var specialtyId: Int = 0,
-//    @SerializedName("name") var name: String = "",
-//    @ColumnInfo(name = "userId")
-//    var userId: Long = 0
-//) : Parcelable
