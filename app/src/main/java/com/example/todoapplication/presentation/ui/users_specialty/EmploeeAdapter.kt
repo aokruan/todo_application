@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplication.R
 import com.example.todoapplication.domain.entity.User
 import com.example.todoapplication.presentation.inflate
-import kotlinx.android.synthetic.main.item_user_speciality.view.*
+import kotlinx.android.synthetic.main.fragment_emploee_details.view.*
 import kotlin.properties.Delegates
 import kotlin.reflect.KFunction1
 
@@ -19,7 +19,7 @@ internal class EmploeeAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return parent.inflate(R.layout.item_user_speciality).let(::ViewHolder)
+        return parent.inflate(R.layout.item_emploee_speciality).let(::ViewHolder)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,7 +41,7 @@ internal class EmploeeAdapter(
             with(itemView) {
                 textViewEmployeeFirstName.text = user.firstName
                 textViewEmployeeSecondName.text = user.lastName
-                textViewEmployeeAge.text = "(${user.age})"
+                textViewEmployeeAge.text = "(" + user.age + ")"
             }
         }
     }

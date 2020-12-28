@@ -13,22 +13,23 @@ import com.example.todoapplication.domain.entity.User
 import com.example.todoapplication.presentation.isVisible
 import com.example.todoapplication.presentation.ui.base.BaseFragment
 import com.example.todoapplication.presentation.viewModel.users_specialty.UsersSpecialtyViewModel
-import kotlinx.android.synthetic.main.fragment_users_specialty.*
+import kotlinx.android.synthetic.main.fragment_emploee_specialty_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UsersSpecialtyFragment : BaseFragment() {
 
-    override val layoutRes: Int = R.layout.fragment_users_specialty
+    override val layoutRes: Int = R.layout.fragment_emploee_specialty_list
 
     private val usersSpecialtyViewModel by viewModel<UsersSpecialtyViewModel>()
     private var specialtyName = ""
 
-    private val specialityAdapter = EmploeeAdapter(
-        onEmployeeClick = this::routeToDetails
-    )
+    private val specialityAdapter = EmploeeAdapter(onEmployeeClick = this::routeToDetails)
 
     private fun routeToDetails(user: User) {
-        findNavController().navigate(R.id.actionToEmploeeDetails, bundleOf("emploee" to user, "specialtyName" to specialtyName))
+        findNavController().navigate(
+            R.id.actionToEmploeeDetails,
+            bundleOf("emploee" to user, "specialtyName" to specialtyName)
+        )
     }
 
     private fun changeVisibilityWarningEmptyList(user: MutableList<User>?) {

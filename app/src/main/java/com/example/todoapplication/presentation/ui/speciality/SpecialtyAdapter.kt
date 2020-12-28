@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplication.R
 import com.example.todoapplication.domain.entity.Specialty
 import com.example.todoapplication.presentation.inflate
-import kotlinx.android.synthetic.main.item_speciality_list.view.*
+import kotlinx.android.synthetic.main.item_speciality.view.*
 import kotlin.properties.Delegates
 
 internal class SpecialtyAdapter(
-        private val onSpecialtyClick: (specialty: Specialty) -> Unit
+    private val onSpecialtyClick: (specialty: Specialty) -> Unit
 ) : RecyclerView.Adapter<SpecialtyAdapter.ViewHolder>() {
 
     var specialtyList: List<Specialty> by Delegates.observable(listOf()) { _, _, _ ->
@@ -18,7 +18,7 @@ internal class SpecialtyAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return parent.inflate(R.layout.item_speciality_list).let(::ViewHolder)
+        return parent.inflate(R.layout.item_speciality).let(::ViewHolder)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

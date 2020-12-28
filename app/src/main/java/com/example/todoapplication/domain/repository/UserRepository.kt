@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.todoapplication.domain.dao.UserDao
 import com.example.todoapplication.domain.entity.Specialty
 import com.example.todoapplication.domain.entity.User
-import com.example.todoapplication.domain.entity.UserNet
+import com.example.todoapplication.domain.entity.EmploeeNetwork
 import com.example.todoapplication.domain.service.api.UserApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,15 +18,13 @@ class UserRepository(private val userApi: UserApi, val userDao: UserDao) {
         withContext(Dispatchers.IO) {
             val responseFromApi = userApi.getAllUsers().await()
 
-//            //Обрабатываем битые поля
-//            val data: MutableList<User> = mutableListOf()
-//            var i = 0
-//            while (i < responseFromApi.response.size) {
-//                data.add(responseFromApi.response[i].format())
-//                i++
-//            }
+            /*
+            * Получаем данные из сети и формируем
+            * структуру для создания связи между таблицами
+            * id специальности - id сотрудника
+            */
 
-            fun insertUserReturnId(user: UserNet): Long {
+            fun insertUserReturnId(user: EmploeeNetwork): Long {
                 return userDao.insertUser(
                     User(
                         0,
@@ -39,7 +37,13 @@ class UserRepository(private val userApi: UserApi, val userDao: UserDao) {
                 )
             }
 
-            fun insertSpecialityRelation(user: UserNet, userId: Long) {
+            /*
+            * Формируем структуру для записи в таблицу специальностей,
+            * структуру для создания связи между таблицами
+            * id специальности - id сотрудника
+            */
+
+            fun insertSpecialityRelation(user: EmploeeNetwork, userId: Long) {
                 var specialityCounter = 0
                 while (specialityCounter < user.specialty.size) {
                     userDao.insertSpecialty(
@@ -57,20 +61,9 @@ class UserRepository(private val userApi: UserApi, val userDao: UserDao) {
             var userListCounter = 0
             while (userListCounter < responseFromApi.response.size) {
                 var user = responseFromApi.response[userListCounter]
-                //insertUserReturnId(user)
                 insertSpecialityRelation(user, insertUserReturnId(user))
                 userListCounter++
             }
-
-            val d0 = userDao.getAllSpecialtyNoLiveData()
-            d0
-            Log.e("Debug", "DB: SPECIALITY (UserRepository)" + d0.toString())
-
-            val d1 = userDao.getAll1()
-            d1
-            Log.e("Debug", "DB: USER" + d1.toString())
-
-            //userDao.insertAll(data)
         }
     }
 }

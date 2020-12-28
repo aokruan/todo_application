@@ -21,8 +21,7 @@ class App : MultiDexApplication() {
                     repositoryModule,
                     databaseModule,
                     apiModule,
-                    netModule,
-                    serviceModule
+                    netModule
                 )
             )
         }

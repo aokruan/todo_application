@@ -3,15 +3,11 @@ package com.example.todoapplication.di
 import android.app.Application
 import androidx.room.Room
 import com.example.todoapplication.domain.AppDatabase
-import com.example.todoapplication.domain.dao.TodoDao
 import com.example.todoapplication.domain.dao.UserDao
 import com.example.todoapplication.domain.repository.UserRepository
 import com.example.todoapplication.domain.repository.UserSpecialtyRepository
-import com.example.todoapplication.domain.service.api.ApiHolder
 import com.example.todoapplication.domain.service.api.UserApi
 import com.example.todoapplication.presentation.viewModel.speciality.SpecialityViewModel
-import com.example.todoapplication.presentation.viewModel.todo.TodoDetailsViewModel
-import com.example.todoapplication.presentation.viewModel.todo.TodoListViewModel
 import com.example.todoapplication.presentation.viewModel.users_specialty.UsersSpecialtyViewModel
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -26,10 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
-    viewModel { TodoListViewModel(get(), get()) }
     viewModel { SpecialityViewModel(get()) }
     viewModel { UsersSpecialtyViewModel(get()) }
-    viewModel { TodoDetailsViewModel(get()) }
 }
 
 val databaseModule = module {
@@ -40,12 +34,9 @@ val databaseModule = module {
             .build()
     }
 
-    fun provideDao(database: AppDatabase): TodoDao = database.todoDao()
-
     fun provideUserDao(database: AppDatabase): UserDao = database.userDao()
 
     single { provideDatabase(androidApplication()) }
-    single { provideDao(get()) }
     single { provideUserDao(get()) }
 }
 
@@ -90,8 +81,4 @@ val repositoryModule = module {
 
     single { provideUserSpecialtyRepository(get()) }
     single { provideUserRepository(get(), get()) }
-}
-
-val serviceModule = module {
-    single { ApiHolder() }
 }

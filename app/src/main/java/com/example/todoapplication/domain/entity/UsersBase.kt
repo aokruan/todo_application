@@ -29,12 +29,12 @@ data class User(
     fun fixFailureFields(string: String): String = (string.toLowerCase()).capitalize()
 
     // Преобразование даты рождения к единому формату
+    // TODO: 27.12.20 Провести рефакторинг
     fun changeBirtday(birthday: String?): String {
         return when (birthday) {
             null -> "-"
             "" -> "-"
             else -> {
-                // TODO: 25.12.20  Даты прилетают неправильные, если не совпадает, то подставляется
                 var date = ""
 
                 // В связи с разным форматом, пока такое решение
@@ -86,7 +86,6 @@ data class User(
             null -> "-"
             "" -> "-"
             else -> {
-                // TODO: 25.12.20  Даты прилетают неправильные, если не совпадает, то подставляется
                 var date = ""
 
                 // В связи с разным форматом, пока такое решение
