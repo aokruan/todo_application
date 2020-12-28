@@ -2,7 +2,7 @@
     <string name="app_name">TodoApplication</string>
 
     <string name="warning_empty_field">Нельзя создать пустую заметку</string>
-    <string name="todo_empty_list">Список заметок пуст</string>
+    <string name="todo_empty_list">Список пуст</string>
     <string name="btn_add_todo">Добавить заметку</string>
     <string name="lbl_description">Описание</string>
     <string name="lbl_title">Название</string>

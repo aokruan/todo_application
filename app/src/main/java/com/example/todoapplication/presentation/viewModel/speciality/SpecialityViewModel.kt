@@ -3,16 +3,15 @@ package com.example.todoapplication.presentation.viewModel.speciality
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapplication.domain.repository.UserRepository
+import com.example.todoapplication.domain.repository.EmploeeRepository
 import kotlinx.coroutines.launch
 
-class SpecialityViewModel(private val userRepository: UserRepository) : ViewModel() {
-    val getAllSpecialty = userRepository.getAllSpecialty
+class SpecialityViewModel(private val emploeeRepository: EmploeeRepository) : ViewModel() {
+    val getAllSpecialty = emploeeRepository.getAllSpecialty
 
-    fun getAllUsers() {
-        Log.e("Debug", "getAllUsers start")
+    fun getAllEmploee() {
         viewModelScope.launch {
-            userRepository.refresh()
+            emploeeRepository.refresh()
         }
     }
 }

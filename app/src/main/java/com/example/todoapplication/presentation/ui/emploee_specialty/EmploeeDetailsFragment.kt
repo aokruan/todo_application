@@ -1,9 +1,9 @@
-package com.example.todoapplication.presentation.ui.users_specialty
+package com.example.todoapplication.presentation.ui.emploee_specialty
 
 import android.os.Bundle
 import android.view.View
 import com.example.todoapplication.R
-import com.example.todoapplication.domain.entity.User
+import com.example.todoapplication.domain.entity.Emploee
 import com.example.todoapplication.presentation.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_emploee_details.*
 
@@ -14,11 +14,11 @@ class EmploeeDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (arguments?.get("emploee") as? User?).let { response ->
+        (arguments?.get("emploee") as? Emploee?).let { response ->
             textViewEmployeeFirstName.text = response?.firstName
             textViewEmployeeSecondName.text = response?.lastName
             textViewEmployeeBirthday.text = if (response?.birthday == "-") {
-                response?.birthday
+                response.birthday
             } else {
                 response?.birthday + " г."
             }

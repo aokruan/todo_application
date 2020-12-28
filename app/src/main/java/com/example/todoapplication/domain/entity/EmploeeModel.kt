@@ -10,11 +10,9 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import org.joda.time.format.ISODateTimeFormat
 
-//data class UsersBase(@SerializedName("response") var response: MutableList<User> = mutableListOf())
-
 @Parcelize
 @Entity
-data class User(
+data class Emploee(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
 
@@ -145,8 +143,8 @@ data class User(
         }
     }
 
-    fun format(): User {
-        return User(
+    fun format(): Emploee {
+        return Emploee(
             id,
             fixFailureFields(firstName),
             fixFailureFields(lastName),

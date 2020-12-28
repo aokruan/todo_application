@@ -1,20 +1,20 @@
-package com.example.todoapplication.presentation.ui.users_specialty
+package com.example.todoapplication.presentation.ui.emploee_specialty
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplication.R
-import com.example.todoapplication.domain.entity.User
+import com.example.todoapplication.domain.entity.Emploee
 import com.example.todoapplication.presentation.inflate
 import kotlinx.android.synthetic.main.fragment_emploee_details.view.*
 import kotlin.properties.Delegates
 import kotlin.reflect.KFunction1
 
 internal class EmploeeAdapter(
-    private val onEmployeeClick: KFunction1<User, Unit>
+    private val onEmployeeClick: KFunction1<Emploee, Unit>
 ) : RecyclerView.Adapter<EmploeeAdapter.ViewHolder>() {
 
-    var emploeeList: List<User> by Delegates.observable(listOf()) { _, _, _ ->
+    var emploeeList: List<Emploee> by Delegates.observable(listOf()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -26,7 +26,7 @@ internal class EmploeeAdapter(
         holder.bind(emploeeList[position])
     }
 
-    fun updateData(data: List<User>) {
+    fun updateData(data: List<Emploee>) {
         this.emploeeList = data
         notifyDataSetChanged()
     }
@@ -34,14 +34,14 @@ internal class EmploeeAdapter(
     override fun getItemCount(): Int = emploeeList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(user: User) {
+        fun bind(emploee: Emploee) {
             itemView.setOnClickListener {
-                onEmployeeClick(user)
+                onEmployeeClick(emploee)
             }
             with(itemView) {
-                textViewEmployeeFirstName.text = user.firstName
-                textViewEmployeeSecondName.text = user.lastName
-                textViewEmployeeAge.text = "(" + user.age + ")"
+                textViewEmployeeFirstName.text = emploee.firstName
+                textViewEmployeeSecondName.text = emploee.lastName
+                textViewEmployeeAge.text = "(" + emploee.age + ")"
             }
         }
     }

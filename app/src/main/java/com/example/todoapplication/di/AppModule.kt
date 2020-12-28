@@ -3,12 +3,13 @@ package com.example.todoapplication.di
 import android.app.Application
 import androidx.room.Room
 import com.example.todoapplication.domain.AppDatabase
-import com.example.todoapplication.domain.dao.UserDao
-import com.example.todoapplication.domain.repository.UserRepository
-import com.example.todoapplication.domain.repository.UserSpecialtyRepository
-import com.example.todoapplication.domain.service.api.UserApi
+import com.example.todoapplication.domain.dao.EmploeeDao
+import com.example.todoapplication.domain.dao.SpecaltyDao
+import com.example.todoapplication.domain.repository.EmploeeRepository
+import com.example.todoapplication.domain.repository.EmploeeSpecialtyRepository
+import com.example.todoapplication.domain.service.api.EmploeeApi
 import com.example.todoapplication.presentation.viewModel.speciality.SpecialityViewModel
-import com.example.todoapplication.presentation.viewModel.users_specialty.UsersSpecialtyViewModel
+import com.example.todoapplication.presentation.viewModel.emploee_specialty.EmploeeSpecialtyViewModel
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,27 +24,29 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
     viewModel { SpecialityViewModel(get()) }
-    viewModel { UsersSpecialtyViewModel(get()) }
+    viewModel { EmploeeSpecialtyViewModel(get()) }
 }
 
 val databaseModule = module {
     fun provideDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, "todo_app")
+        return Room.databaseBuilder(application, AppDatabase::class.java, "emploee_app")
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
     }
 
-    fun provideUserDao(database: AppDatabase): UserDao = database.userDao()
+    fun provideEmploeeDao(database: AppDatabase): EmploeeDao = database.emploeeDao()
+    fun provideSpecialtyDao(database: AppDatabase): SpecaltyDao = database.specialtyDao()
 
     single { provideDatabase(androidApplication()) }
-    single { provideUserDao(get()) }
+    single { provideEmploeeDao(get()) }
+    single { provideSpecialtyDao(get()) }
 }
 
 val apiModule = module {
-    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+    fun provideEmploeeApi(retrofit: Retrofit): EmploeeApi = retrofit.create(EmploeeApi::class.java)
 
-    single { provideUserApi(get()) }
+    single { provideEmploeeApi(get()) }
 }
 
 val netModule = module {
@@ -73,12 +76,16 @@ val netModule = module {
 }
 
 val repositoryModule = module {
-    fun provideUserRepository(userApi: UserApi, userDao: UserDao): UserRepository =
-        UserRepository(userApi, userDao)
+    fun provideEmploeeRepository(
+        emploeeApi: EmploeeApi,
+        emploeeDao: EmploeeDao,
+        specaltyDao: SpecaltyDao
+    ): EmploeeRepository =
+        EmploeeRepository(emploeeApi, emploeeDao, specaltyDao)
 
-    fun provideUserSpecialtyRepository(userDao: UserDao): UserSpecialtyRepository =
-        UserSpecialtyRepository(userDao)
+    fun provideEmploeeSpecialtyRepository(emploeeDao: EmploeeDao): EmploeeSpecialtyRepository =
+        EmploeeSpecialtyRepository(emploeeDao)
 
-    single { provideUserSpecialtyRepository(get()) }
-    single { provideUserRepository(get(), get()) }
+    single { provideEmploeeSpecialtyRepository(get()) }
+    single { provideEmploeeRepository(get(), get(), get()) }
 }

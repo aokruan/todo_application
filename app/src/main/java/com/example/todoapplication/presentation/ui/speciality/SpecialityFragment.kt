@@ -56,7 +56,7 @@ class SpecialityFragment : BaseFragment() {
     override fun setListeners() {
         buttonLoadData.setOnClickListener {
             // Активируем запрос в сеть
-            specialityViewModel.getAllUsers()
+            specialityViewModel.getAllEmploee()
         }
     }
 }

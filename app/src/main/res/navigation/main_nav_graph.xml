@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/actionToUsersBySpecialty"
-        android:name="com.example.todoapplication.presentation.ui.users_specialty.UsersSpecialtyFragment"
+        android:name="com.example.todoapplication.presentation.ui.emploee_specialty.EmploeeSpecialtyFragment"
         tools:layout="@layout/fragment_specialty_list">
         <action
             android:id="@+id/action_UsersBySpecialty_to_actionToEmploeeDetails"
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/actionToEmploeeDetails"
-        android:name="com.example.todoapplication.presentation.ui.users_specialty.EmploeeDetailsFragment"
+        android:name="com.example.todoapplication.presentation.ui.emploee_specialty.EmploeeDetailsFragment"
         tools:layout="@layout/fragment_emploee_details">
     </fragment>
 </navigation>
