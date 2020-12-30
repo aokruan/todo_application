@@ -12,7 +12,7 @@ import org.joda.time.format.ISODateTimeFormat
 
 @Parcelize
 @Entity
-data class Emploee(
+data class Employee(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
 
@@ -27,48 +27,67 @@ data class Emploee(
     fun fixFailureFields(string: String): String = (string.toLowerCase()).capitalize()
 
     // Преобразование даты рождения к единому формату
-    // TODO: 27.12.20 Провести рефакторинг
+    // TODO: Не лучшее решение
     fun changeBirtday(birthday: String?): String {
         return when (birthday) {
             null -> "-"
             "" -> "-"
             else -> {
+                // Результат преобразования даты
                 var date = ""
 
                 // В связи с разным форматом, пока такое решение
                 try {
-                    var pattern = DateTime.parse(birthday, DateTimeFormat.forPattern("dd-MM-yyyy"))
-                    val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                    // Парсим строку под шаблон
+                    val parsedInputDate =
+                        DateTime.parse(birthday, DateTimeFormat.forPattern("dd-MM-yyyy"))
 
-                    val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                    // Приводим к определённому DateTime формату
+                    val dtf: DateTimeFormatter =
+                        DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+                    // Парсим Date
                     val dateTime: DateTime =
-                        dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+                        dtf.parseDateTime(parsedInputDate.toString()) // 2000-07-23T00:00:00.000Z
 
-                    val pattern2 = "dd.MM.yyyy"
+                    // Приводим к стандарту
+                    val dateTimeFormat = ISODateTimeFormat.dateTime()
 
-                    val dtf1 = ISODateTimeFormat.dateTime()
-                    val parsedDate = dtf1.parseLocalDateTime(dateTime.toString())
+                    // Приводим к необходимому шаблону
                     val dateWithCustomFormat =
-                        parsedDate.toString(DateTimeFormat.forPattern(pattern2))
+                        dateTimeFormat.parseLocalDateTime(dateTime.toString())
+                            .toString(
+                                DateTimeFormat
+                                    .forPattern("dd.MM.yyyy")
+                            )
 
                     date = dateWithCustomFormat
 
                 } catch (e: Exception) {
                     try {
-                        var pattern =
+                        // Парсим строку под шаблон
+                        val parsedInputDate =
                             DateTime.parse(birthday, DateTimeFormat.forPattern("yyyy-MM-dd"))
-                        val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 
-                        val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                        // Приводим к определённому DateTime формату
+                        val dtf: DateTimeFormatter =
+                            DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+                        // Парсим Date
                         val dateTime: DateTime =
-                            dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+                            dtf.parseDateTime(parsedInputDate.toString()) // 2000-07-23T00:00:00.000Z
 
-                        val pattern2 = "dd.MM.yyyy"
+                        // Приводим к стандарту
+                        val dateTimeFormat = ISODateTimeFormat.dateTime()
 
-                        val dtf1 = ISODateTimeFormat.dateTime()
-                        val parsedDate = dtf1.parseLocalDateTime(dateTime.toString())
+                        // Приводим к необходимому шаблону
                         val dateWithCustomFormat =
-                            parsedDate.toString(DateTimeFormat.forPattern(pattern2))
+                            dateTimeFormat.parseLocalDateTime(dateTime.toString())
+                                .toString(
+                                    DateTimeFormat
+                                        .forPattern("dd.MM.yyyy")
+                                )
+
                         date = dateWithCustomFormat
                     } finally {
                     }
@@ -84,17 +103,22 @@ data class Emploee(
             null -> "-"
             "" -> "-"
             else -> {
+                // Результат преобразования даты
                 var date = ""
 
                 // В связи с разным форматом, пока такое решение
                 try {
-                    var pattern =
+                    // Парсим строку под шаблон
+                    val parsedInputDate =
                         DateTime.parse(birthday, DateTimeFormat.forPattern("dd-MM-yyyy"))
-                    val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 
-                    val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                    // Приводим к определённому DateTime формату
+                    val dtf: DateTimeFormatter =
+                        DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+                    // Парсим Date
                     val dateTime: DateTime =
-                        dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+                        dtf.parseDateTime(parsedInputDate.toString()) //2000-07-23T00:00:00.000Z
 
                     val start = DateTime(
                         dateTime.year,
@@ -105,21 +129,25 @@ data class Emploee(
                         0,
                         0
                     )
-                    val endDate = DateTime.now()
 
-                    val period = Period(start, endDate)
+                    // Вычисляем возраст
+                    val period = Period(start, DateTime.now())
 
                     date = period.years.toString()
 
                 } catch (e: Exception) {
                     try {
-                        var pattern =
+                        // Парсим строку под шаблон
+                        val parsedInputDate =
                             DateTime.parse(birthday, DateTimeFormat.forPattern("yyyy-MM-dd"))
-                        val pattern1 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 
-                        val dtf: DateTimeFormatter = DateTimeFormat.forPattern(pattern1)
+                        // Приводим к определённому DateTime формату
+                        val dtf: DateTimeFormatter =
+                            DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+
+                        // Парсим Date
                         val dateTime: DateTime =
-                            dtf.parseDateTime(pattern.toString()) //2000-07-23T00:00:00.000Z
+                            dtf.parseDateTime(parsedInputDate.toString()) //2000-07-23T00:00:00.000Z
 
                         val start = DateTime(
                             dateTime.year,
@@ -130,9 +158,8 @@ data class Emploee(
                             0,
                             0
                         )
-                        val endDate = DateTime.now()
 
-                        val period = Period(start, endDate)
+                        val period = Period(start, DateTime.now())
 
                         date = period.years.toString()
                     } finally {
@@ -143,8 +170,8 @@ data class Emploee(
         }
     }
 
-    fun format(): Emploee {
-        return Emploee(
+    fun format(): Employee {
+        return Employee(
             id,
             fixFailureFields(firstName),
             fixFailureFields(lastName),
@@ -160,7 +187,6 @@ data class Emploee(
 data class Specialty(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     var specialtyId: Int = 0,
     var name: String = "",
     var userId: Long = 0

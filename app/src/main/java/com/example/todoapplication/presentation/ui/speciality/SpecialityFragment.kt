@@ -1,7 +1,10 @@
 package com.example.todoapplication.presentation.ui.speciality
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -23,7 +26,7 @@ class SpecialityFragment : BaseFragment() {
 
     private fun routeToDetails(specialty: Specialty) {
         findNavController().navigate(
-            R.id.action_specialityFragment_to_actionToUsersBySpecialty, bundleOf(
+            R.id.actionSpecialityFragmentToEmployeeSpecialty, bundleOf(
                 "specialty" to specialty
             )
         )
@@ -50,13 +53,25 @@ class SpecialityFragment : BaseFragment() {
             rv.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
             rv.adapter = specialityAdapter
         }
-
     }
 
     override fun setListeners() {
         buttonLoadData.setOnClickListener {
-            // Активируем запрос в сеть
-            specialityViewModel.getAllEmploee()
+            if ((activity?.let { it1 -> isOnline(it1.applicationContext) })  == false) {
+                Toast.makeText(
+                    this.context,
+                    "Нет соединения с интернетом!", Toast.LENGTH_LONG
+                ).show();
+            } else {
+                // Активируем запрос в сеть
+                specialityViewModel.getAllEmployee()
+            }
         }
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }

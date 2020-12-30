@@ -2,9 +2,9 @@ package com.example.todoapplication.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Data(@SerializedName("response") var response: List<EmploeeNetwork>)
+data class Data(@SerializedName("response") var response: List<EmployeeNetwork>)
 
-data class EmploeeNetwork(
+data class EmployeeNetwork(
     @SerializedName("f_name") var fName: String,
     @SerializedName("l_name") var lName: String,
     @SerializedName("birthday") var birthday: String,

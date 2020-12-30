@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageVievAvatar"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageVievPerson"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_person"
+        app:layout_constraintStart_toEndOf="@+id/imageVievAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageVievAvatar" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeFirstNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/label_name"
+        app:layout_constraintBottom_toBottomOf="@+id/imageVievPerson"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/imageVievPerson"
+        app:layout_constraintTop_toTopOf="@+id/imageVievPerson" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmployeeFirstNameLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmployeeFirstNameLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmployeeFirstNameLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeSecondNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/label_second_name"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toStartOf="@+id/textViewEmployeeFirstNameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmployeeFirstNameLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeSecondName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmployeeSecondNameLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmployeeSecondNameLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmployeeSecondNameLabel" />
+
+
+    <ImageView
+        android:id="@+id/imageVievCalendarToday"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_calendar_today"
+        app:layout_constraintStart_toStartOf="@+id/imageVievPerson"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmployeeSecondNameLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeBirthdayLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/label_birthday"
+        app:layout_constraintBottom_toBottomOf="@+id/imageVievCalendarToday"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/imageVievCalendarToday"
+        app:layout_constraintTop_toTopOf="@+id/imageVievCalendarToday" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmployeeBirthdayLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmployeeBirthdayLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmployeeBirthdayLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeAgeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/label_age"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toStartOf="@+id/textViewEmployeeBirthdayLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmployeeBirthdayLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmployeeAgeLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmployeeAgeLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmployeeAgeLabel" />
+
+    <ImageView
+        android:id="@+id/imageVievEngineering"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_engineering"
+        app:layout_constraintBottom_toBottomOf="@+id/imageVievAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imageVievCalendarToday"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmployeeAgeLabel" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeSpecialtyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/label_specialty"
+        app:layout_constraintBottom_toBottomOf="@+id/imageVievEngineering"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/imageVievEngineering"
+        app:layout_constraintTop_toTopOf="@+id/imageVievEngineering" />
+
+    <TextView
+        android:id="@+id/textViewEmployeeSpecialty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmployeeSpecialtyLabel"
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmployeeSpecialtyLabel"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmployeeSpecialtyLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

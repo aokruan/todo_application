@@ -6,20 +6,29 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
+    <ImageView
+        android:id="@+id/imageVievAvatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_engineering"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewSpecialty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:hint="@string/app_name"
         android:maxLines="1"
         android:paddingEnd="70dp"
         android:singleLine="true"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageVievAvatar"
+        app:layout_constraintStart_toEndOf="@+id/imageVievAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageVievAvatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

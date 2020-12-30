@@ -10,7 +10,10 @@ import com.example.todoapplication.domain.entity.Specialty
 @Dao
 interface SpecaltyDao {
     @Query("SELECT * FROM Specialty GROUP BY name")
-    fun getAllSpecialty(): LiveData<List<Specialty>>
+    fun getAllSpecialtyGroupByName(): LiveData<List<Specialty>>
+
+    @Query("SELECT * FROM Specialty")
+    fun getAllSpecialty(): List<Specialty>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSpecialty(specialty: Specialty): Long
