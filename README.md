@@ -1,4 +1,5 @@
 # Тестовое приложение для создания заметок  
 ## Стек: Room, LiveData, Coroutines, Koin, Google Navigation
 
-<img src="https://user-images.githubusercontent.com/49877495/102896684-5adc3c80-4499-11eb-8fcb-10f0ee43107b.png" width=250 height=490> <img src="https://user-images.githubusercontent.com/49877495/102896722-67f92b80-4499-11eb-9c02-817ae33d8838.png" width=250 height=490> <img src="https://user-images.githubusercontent.com/49877495/102896741-734c5700-4499-11eb-897d-f1c719b1198c.png" width=250 height=490>
+<img src="https://user-images.githubusercontent.com/49877495/103328446-8b206e00-4a8b-11eb-9efa-2abe265c2051.png" width=250 height=490> <img src="https://user-images.githubusercontent.com/49877495/103328459-95426c80-4a8b-11eb-85d8-20ec27750dc6.png" width=250 height=490> <img src="https://user-images.githubusercontent.com/49877495/103328477-a1c6c500-4a8b-11eb-94a1-7964fef55af5.png" width=250 height=490>
+
