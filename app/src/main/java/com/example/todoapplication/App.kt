@@ -19,7 +19,6 @@ class App : MultiDexApplication() {
                 listOf(
                     viewModelModule,
                     repositoryModule,
-                    databaseModule,
                     apiModule,
                     netModule
                 )

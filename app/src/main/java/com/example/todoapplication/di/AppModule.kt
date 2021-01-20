@@ -1,15 +1,10 @@
 package com.example.todoapplication.di
 
 import android.app.Application
-import androidx.room.Room
-import com.example.todoapplication.domain.AppDatabase
-import com.example.todoapplication.domain.dao.EmployeeDao
-import com.example.todoapplication.domain.dao.SpecaltyDao
-import com.example.todoapplication.domain.repository.EmployeeRepository
-import com.example.todoapplication.domain.repository.EmployeeSpecialtyRepository
-import com.example.todoapplication.domain.service.api.EmployeeApi
-import com.example.todoapplication.presentation.viewModel.employee_specialty.EmployeeSpecialtyViewModel
-import com.example.todoapplication.presentation.viewModel.speciality.SpecialityViewModel
+import com.example.todoapplication.domain.repository.ImagesRepository
+import com.example.todoapplication.domain.service.api.ImagesApi
+import com.example.todoapplication.presentation.viewModel.image_details.ImageDetailsViewModel
+import com.example.todoapplication.presentation.viewModel.images.ImagesViewModel
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,31 +18,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModelModule = module {
-    viewModel { SpecialityViewModel(get()) }
-    viewModel { EmployeeSpecialtyViewModel(get()) }
-}
-
-val databaseModule = module {
-    fun provideDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, "employee_app")
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
-            .build()
-    }
-
-    fun provideEmployeeDao(database: AppDatabase): EmployeeDao = database.employeeDao()
-    fun provideSpecialtyDao(database: AppDatabase): SpecaltyDao = database.specialtyDao()
-
-    single { provideDatabase(androidApplication()) }
-    single { provideEmployeeDao(get()) }
-    single { provideSpecialtyDao(get()) }
+    viewModel { ImagesViewModel(get()) }
+    viewModel { ImageDetailsViewModel(get()) }
 }
 
 val apiModule = module {
-    fun provideEmployeeApi(retrofit: Retrofit): EmployeeApi =
-        retrofit.create(EmployeeApi::class.java)
+    fun provideImagesApi(retrofit: Retrofit): ImagesApi =
+        retrofit.create(ImagesApi::class.java)
 
-    single { provideEmployeeApi(get()) }
+    single { provideImagesApi(get()) }
 }
 
 val netModule = module {
@@ -63,9 +42,10 @@ val netModule = module {
 
     fun provideRetrofit(factory: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://gitlab.65apps.com/")
+            .baseUrl("https://picsum.photos/v2/")
             .addConverterFactory(GsonConverterFactory.create(factory))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
     }
@@ -77,16 +57,8 @@ val netModule = module {
 }
 
 val repositoryModule = module {
-    fun provideEmployeeRepository(
-        employeeApi: EmployeeApi,
-        employeeDao: EmployeeDao,
-        specaltyDao: SpecaltyDao
-    ): EmployeeRepository =
-        EmployeeRepository(employeeApi, employeeDao, specaltyDao)
+    fun provideImagesRepository(imagesApi: ImagesApi): ImagesRepository =
+        ImagesRepository(imagesApi)
 
-    fun provideEmployeeSpecialtyRepository(employeeDao: EmployeeDao): EmployeeSpecialtyRepository =
-        EmployeeSpecialtyRepository(employeeDao)
-
-    single { provideEmployeeSpecialtyRepository(get()) }
-    single { provideEmployeeRepository(get(), get(), get()) }
+    single { provideImagesRepository(get()) }
 }
